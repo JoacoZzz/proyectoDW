@@ -14,41 +14,125 @@ app.post('/login', async(req,res)=> {
 
   try {
     const { nombreAlumno} = req.body;
-    const { nombreMaestro} = req.body;
-    const { nombreAdministrador} = req.body;
+ 
     const  {contraseña} = req.body;
 
     const alumno = await Alumno.findOne({ where: { nombreAlumno } });
-   
+    const maestro = await Maestro.findOne({ where: { nombreAlumno } });
+   const administrador = await Administrador.findOne({ where: { nombreAlumno } });
+
+
     if (alumno){
     const passwordAlumno = await bcrypt.compare(contraseña,alumno.contraseña);
   
     if(passwordAlumno){
-    const tokenA = jwt.sign({ id: alumno.idAlumno, nombre: alumno.nombre }, 'contraseña_secreta', {
+    const tokenA = jwt.sign({ id: alumno.id, nombre: alumno.nombreAlumno }, 'contraseña_secreta', {
       expiresIn: '1h'
     });
     if(tokenA){
-        return res.json({ message: 'Login exitoso'});
+        return res.json({success:true,noUser:false, message: 'Login exitoso' ,data:alumno });
     
         }else{
-            return res.status(401).json({ error: 'Contraseña incorrecta' });
+            return res.json({success:false, message: 'Contraseña incorrecta', data:alumno });
         }
     }else{
-    return res.status(401).json({ error: 'Usuario no encontrado' });
+    return res.json({success:false, message: 'Usuarios no encontrado', data:alumno });
     } 
 
-    }
+    }else if (maestro) {
+        const passwordMaestro = await bcrypt.compare(contraseña, maestro.contraseña);
+           
+        if(passwordMaestro){
+            const tokenM = jwt.sign({ id: maestro.id, nombre: maestro.nombreAlumno }, 'contraseña_secreta', {
+          expiresIn: '1h'
+        });      
+       
+        if(tokenM){
+           return res.json({ad:true, noUser:true, success:false, message: 'Login exitoso',data: maestro });
+        
+            }else{
+                return res.json({ ad: false, success:false, message: 'Contraseña incorrecta', data:maestro });
+            }
+        }else{
+        return res.json({ad: false,success:false, message: 'Usuario no encontrado' ,data:maestro });
+        } 
+        } 
+        else if(administrador) {
+         const passwordAdministrador = await bcrypt.compare(contraseña, administrador.contraseña);
+            if(passwordAdministrador){
+        const tokenAd = jwt.sign({ id: administrador.id, nombre: administrador.nombre }, 'contraseña_secreta', {
+          expiresIn: '1h'
+        });
+        
+        if(tokenAd){
+           return res.json({ad:true,success:true, noUser:true, message: 'Login exitoso', data:administrador });
+        
+            }else{
+                return res.json({success:false,message: 'Contraseña incorrecta', data:administrador});
+            }
+        }else{
+        return res.json({success:false, message: 'Usuario no encontrado', data:administrador });
+        } 
+        }else{
+           return res.json({noUser:true, message: 'Usuario no encontrado'});
+        }
+        
   } catch (error) {
     res.status(500).json({ error: 'Error del servidor' + error.message });
   }
 });
 
-app.post('/api/alumnos', async (req, res) => {
+app.post('/api/maestros', async (req, res) => {
   try {
-    const { nombreAlumno, contraseña, modulo, estado } = req.body;
+    const { nombreAlumno, contraseña, modulos,materias } = req.body;
 
     // Validación básica
-    if (!nombreAlumno || !contraseña || !modulo || !estado) {
+    if (!nombreAlumno || !contraseña || !modulos || !materias) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    // Hashear la contraseña
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(contraseña, saltRounds);
+
+    
+    const newMaestro = await Maestro.create({
+      nombreAlumno,
+      contraseña: hashedPassword, 
+      modulos,
+      materias
+     
+    });
+
+    console.log(newMaestro);
+
+    res.status(201).json({
+      success:true,
+      message: 'Usuario creado correctamente',
+      user: {
+        id: newMaestro.id,
+        nombreAlumno: newMaestro.nombreAlumno,
+        modulos: newMaestro.modulos,
+        materias: newMaestro.materias
+        
+      
+      }
+    });
+
+  } catch (error) {
+    console.error('Error al crear maestro:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+  
+   
+    app.post('/api/alumnos', async (req, res) => {
+  try {
+    const { nombreAlumno, contraseña, modulo} = req.body;
+
+    // Validación básica
+    if (!nombreAlumno || !contraseña || !modulo) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -60,25 +144,63 @@ app.post('/api/alumnos', async (req, res) => {
     const newAlumno = await Alumno.create({
       nombreAlumno,
       contraseña: hashedPassword, 
-      modulo,
-      estado
+      modulo
+      
     });
 
     console.log(newAlumno);
 
     res.status(201).json({
+      success:true,
       message: 'Usuario creado correctamente',
       user: {
         id: newAlumno.id,
         nombreAlumno: newAlumno.nombreAlumno,
-        modulo: newAlumno.modulo,
-        estado: newAlumno.estado
+        modulo: newAlumno.modulo
+     
       
       }
     });
 
   } catch (error) {
     console.error('Error al crear alumno:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/administrador', async (req, res) => {
+  try { 
+    const { nombreAlumno, contraseña } = req.body;
+
+    // Validación básica
+    if (!nombreAlumno || !contraseña) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    // Hashear la contraseña
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(contraseña, saltRounds);
+
+    
+    const newAdministrador = await Administrador.create({
+      nombreAlumno,
+      contraseña: hashedPassword
+      
+    });
+
+    console.log(newAdministrador);
+
+    res.status(201).json({
+      message: 'Usuario creado correctamente',
+      user: {
+        id: newAdministrador.id,
+        nombreAlumno: newAdministrador.nombreAlumno
+       
+      }
+    });
+
+  } catch (error) {
+    console.error('Error al crear administrador:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });

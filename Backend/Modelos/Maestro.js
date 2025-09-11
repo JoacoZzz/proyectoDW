@@ -14,10 +14,8 @@ const Maestro = sequelize.define('maestro', {
     },
     materias: {
         type: DataTypes.STRING
-    },
-    estado: {
-        type: DataTypes.STRING
     }
+    
 },
     {
         tableName: 'maestro',
