@@ -12,10 +12,8 @@ const Alumno = sequelize.define('alumno', {
     },
     modulo: {
         type: DataTypes.STRING
-    },
-    estado: {
-        type: DataTypes.STRING
     }
+   
     
 },
     {

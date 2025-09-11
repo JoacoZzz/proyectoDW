@@ -1,32 +1,38 @@
 'use client'
 import React, { useState } from 'react'
-import { registro } from '@/app/Servicios/Api';
+import { registroAlumno } from '@/app/Servicios/Api';
 import { useRouter } from 'next/navigation';
 
 export default function RegistroAlumno() {
   const [nombreAlumno, setNombreAlumno] = useState<string>('');
   const [contraseña, setContraseña] = useState<string>('');
   const [modulo, setModulo] = useState<string>('');
-  const [estado, setEstado] = useState<string>('');
+
   const [mensaje, setMensaje] = useState<string>('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+   const alumnosRegistros = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!nombreAlumno || !contraseña) {
+    if (!nombreAlumno || !contraseña || !modulo ) {
       setMensaje('Todos los campos son obligatorios');
       return;
     }
-
-    // Aqui se llamara la Api
-    registro({ nombreAlumno, contraseña, modulo, estado });
+    const data= await registroAlumno({nombreAlumno,contraseña,modulo});
+  
+    if(data.success===true){
     setMensaje('Registro exitoso');
+    alert('Registro Exitoso')
     setTimeout(() => {
       router.push('/InicioAlumno'); 
     }, 1000);
+    }else{
+     setMensaje('Credenciales invalidas');
+    alert('Credenciales invalidas')
+    }
+    
+    
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -34,7 +40,7 @@ export default function RegistroAlumno() {
           Registro de Alumno
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={alumnosRegistros} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Nombre del Alumno
@@ -62,7 +68,20 @@ export default function RegistroAlumno() {
               required
             />
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Modulo
+            </label>
+            <input
+              type="text"
+              placeholder="Modulo"
+              value={modulo}
+              onChange={(e) => setModulo(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+          </div>
+          
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"

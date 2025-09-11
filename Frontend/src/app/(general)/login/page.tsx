@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login } from '@/app/Servicios/Api';
 
 const Page = () => {
   const [nombreAlumno, setNombreAlumno] = useState('');
@@ -8,47 +9,43 @@ const Page = () => {
   const [mensaje, setMensaje] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const escuelaLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
 
-    if (nombreAlumno === '' || contraseña === '') {
+    if (nombreAlumno === '' || contraseña === '' ) {
       setMensaje('Todos los campos son necesarios');
       return;
     }
 
-    //Usuario admin de prueba
-    const defaultAdmin = {
-      username: 'admin',
-      password: 'admin123',
-    };
+    const data= await login({nombreAlumno,contraseña});
 
-    //Usuario alumno de prueba
-    const defaultAlumno = {
-      username: 'alumno',
-      password: 'alumno123',
-    };
+if(data.success===true && data.noUser===false){
+    setMensaje('Login Exitoso')
+    alert('Login Exitoso')
+    router.push('/InicioAlumno');
+}else if ( data.success===false && data.noUser===true) {
+  setMensaje('Login Exitoso')
+    alert('Login Exitoso')
+    router.push('/InicioMaestro');
+}else if (data.ad===true && data.success===true && data.noUser===true) {
+  setMensaje('Login Exitoso')
+    alert('Login Exitoso')
+    router.push('/InicioAdmin');
+}else{
+  setMensaje('Credenciales incorrectas')
+    alert('Credenciales incorrectas')
+  
+}
 
-    if (nombreAlumno === defaultAdmin.username && contraseña === defaultAdmin.password) {
-      localStorage.setItem('user', 'Admin');
-      setTimeout(() => {
-        router.push('/InicioAdmin');
-      }, 1000);
-    } else if (nombreAlumno === defaultAlumno.username && contraseña === defaultAlumno.password) {
-      localStorage.setItem('user', 'Alumno');
-      setTimeout(() => {
-        router.push('/InicioAlumno');
-      }, 1000);
-    } else {
-      setMensaje('Usuario o contraseña incorrectos');
-    }
-  };
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Iniciar Sesión</h2>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={escuelaLogin} className="space-y-4">
           <div>
             <input
               type="text"

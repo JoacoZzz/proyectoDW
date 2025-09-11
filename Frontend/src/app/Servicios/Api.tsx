@@ -8,50 +8,31 @@ export async function login(userData: { nombreAlumno: string, contraseña: strin
      
 const response= await axios.post(`${apiURL}/login`, userData);
   
-if (response.data.success===true) {
-        alert('Login exitosoo');
         return response.data;
-      }else if (response.data.noUser) {
-        return alert('Usuario no encontrado'), window.location.reload();
-         
-      }
-       else {
-       return alert('Credenciales incorrectas'), window.location.reload();
-         
-       
-      }
-      
-    }
-    catch(error){
+   
+   
+     } catch(error){
         console.log(error)
-    }
+    
     
         
 
     }
+  }
 
-  export async function registro(userData: { nombreAlumno: string, contraseña: string, modulo: string, estado: string }) {
+  export async function registroAlumno(userData: { nombreAlumno: string, contraseña: string, modulo: string }) {
     try{
 
      
 const response= await axios.post(`${apiURL}/api/alumnos`, userData);
   
-if (response.data.success===true) {
-        alert('Login exitosoo');
         return response.data;
-      }
-       else {
-       return alert('Credenciales incorrectas'), window.location.reload();
-         
-       
-      }
-      
-    }
-    catch(error){
+    }catch(error){
         console.log(error)
     }
     
         
 
-    }
+  }
+
    
