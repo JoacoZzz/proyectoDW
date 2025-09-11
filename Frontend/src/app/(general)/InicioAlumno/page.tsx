@@ -5,12 +5,6 @@ import { useEffect } from 'react';
 export default function InicioAlumno() {
   const router = useRouter();
 
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user !== 'Alumno') {
-      router.replace('/login');
-    }
-  }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
