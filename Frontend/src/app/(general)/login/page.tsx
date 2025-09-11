@@ -17,18 +17,29 @@ const Page = () => {
     }
 
     //Usuario admin de prueba
-    const defaultUser = {
+    const defaultAdmin = {
       username: 'admin',
       password: 'admin123',
     };
 
-    if (nombreAlumno === defaultUser.username && contraseña === defaultUser.password) {
-      localStorage.setItem('user', 'Admin')
+    //Usuario alumno de prueba
+    const defaultAlumno = {
+      username: 'alumno',
+      password: 'alumno123',
+    };
+
+    if (nombreAlumno === defaultAdmin.username && contraseña === defaultAdmin.password) {
+      localStorage.setItem('user', 'Admin');
       setTimeout(() => {
-        router.push('/InicioAdmin'); 
+        router.push('/InicioAdmin');
+      }, 1000);
+    } else if (nombreAlumno === defaultAlumno.username && contraseña === defaultAlumno.password) {
+      localStorage.setItem('user', 'Alumno');
+      setTimeout(() => {
+        router.push('/InicioAlumno');
       }, 1000);
     } else {
-      setMensaje('Usuario o contraseña incorrectos'); //Datos incorrectos
+      setMensaje('Usuario o contraseña incorrectos');
     }
   };
 
@@ -82,4 +93,3 @@ const Page = () => {
 };
 
 export default Page;
-
