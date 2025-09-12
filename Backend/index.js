@@ -30,11 +30,11 @@ app.post('/login', async(req,res)=> {
       expiresIn: '1h'
     });
     if(tokenA){
-        return res.json({success:true,noUser:false, message: 'Login exitoso' ,data:alumno });
+        return res.json({success:true, noUser:false, message: 'Login exitoso' ,data:alumno });
     
         }else{
             return res.json({success:false, message: 'Contraseña incorrecta', data:alumno });
-        }
+        } 
     }else{
     return res.json({success:false, message: 'Usuarios no encontrado', data:alumno });
     } 
