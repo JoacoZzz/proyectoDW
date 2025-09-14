@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '@/app/Servicios/Api';
+import { useUsuario } from '@/app/Provider/UserProvider';
 
 const Page = () => {
-  const [nombreAlumno, setNombreAlumno] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [mensaje, setMensaje] = useState('');
+   const {setUsuario} = useUsuario();
+  const [nombreAlumno, setNombreAlumno] = useState<string>('');
+  const [contraseña, setContraseña] = useState<string>('');
+  const [mensaje, setMensaje] = useState<string>('');
   const router = useRouter();
-
+ 
   const escuelaLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -17,19 +19,25 @@ const Page = () => {
       setMensaje('Todos los campos son necesarios');
       return;
     }
-
+ try{
     const data= await login({nombreAlumno,contraseña});
 
-if(data.success===true && data.noUser===false){
+if(data?.success===true && data.noUser===false ){
     setMensaje('Login Exitoso')
+    setUsuario(data.data)
     alert('Login Exitoso')
     router.push('/InicioAlumno');
-}else if ( data.success===false && data.noUser===true) {
+    
+}else if ( data?.success===false && data.noUser===true) {
   setMensaje('Login Exitoso')
+  console.log("Usuario del login", data.data)
+    setUsuario(data.data)
+    console.log('Usuario guardado en el context', data.data)
     alert('Login Exitoso')
     router.push('/InicioMaestro');
-}else if (data.ad===true && data.success===true && data.noUser===true) {
+}else if (data?.ad===true && data.success===true && data.noUser===true) {
   setMensaje('Login Exitoso')
+  setUsuario(data.data)
     alert('Login Exitoso')
     router.push('/InicioAdmin');
 }else{
@@ -38,6 +46,9 @@ if(data.success===true && data.noUser===false){
   
 }
 
+ }catch{
+  alert('Usuario no encontrado')
+ }
   }
 
   return (
