@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Usuario } from "../Modelos/Usuario";
 
 const apiURL = "http://localhost:5000";
 
@@ -6,7 +7,7 @@ export async function login(userData: { nombreAlumno: string, contraseña: strin
     try{
 
      
-const response= await axios.post(`${apiURL}/login`, userData);
+const response= await axios.post<{success:boolean;noUser:boolean; ad:boolean;data:Usuario}>(`${apiURL}/login`, userData);
   
         return response.data;
    
@@ -14,9 +15,6 @@ const response= await axios.post(`${apiURL}/login`, userData);
      } catch(error){
         console.log(error)
     
-    
-        
-
     }
   }
 
@@ -35,4 +33,22 @@ const response= await axios.post(`${apiURL}/api/alumnos`, userData);
 
   }
 
+   export async function getInfoMaestro() {
+    try{
+
+     
+const response= await axios.get(`${login}`);
+        if (response.data===login) {
+           return response.data;  
+        }
+       
    
+   
+     } catch(error){
+        console.log(error)
+    
+    
+        
+
+    }
+  }
