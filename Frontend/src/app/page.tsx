@@ -1,4 +1,5 @@
 'use client'
+import AlumnosRegistrados from './(general)/AlumnosRegistrados/page';
 import InicioAdmin from './(general)/InicioAdmin/page';
 import InicioAlumno from './(general)/InicioAlumno/page';
 import InicioMaestro from './(general)/InicioMaestro/page';
@@ -12,11 +13,11 @@ export default function Home() {
   return (
   <UserProvider> 
     <LoginPage></LoginPage>
-    <InicioAlumno></InicioAlumno>
-    <InicioAdmin></InicioAdmin>
-    <Home></Home>
-    <InicioMaestro></InicioMaestro>
-    <RegistroAlumno></RegistroAlumno>
+   <RegistroAlumno></RegistroAlumno>
+   <InicioAlumno></InicioAlumno>
+   <InicioAdmin></InicioAdmin>
+   <InicioMaestro></InicioMaestro>
+   <AlumnosRegistrados></AlumnosRegistrados>
   </UserProvider>
   );
 }

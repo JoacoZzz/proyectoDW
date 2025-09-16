@@ -33,22 +33,19 @@ const response= await axios.post(`${apiURL}/api/alumnos`, userData);
 
   }
 
-   export async function getInfoMaestro() {
+
+
+  export async function getTodosAlumnos() {
     try{
 
      
-const response= await axios.get(`${login}`);
-        if (response.data===login) {
-           return response.data;  
-        }
-       
+const response= await axios.get(`${apiURL}/alumnos-registrados`);
+  
+        return response.data;
    
    
      } catch(error){
         console.log(error)
     
-    
-        
-
     }
   }
