@@ -206,7 +206,17 @@ app.post('/api/administrador', async (req, res) => {
 });
 
   
+//Get alumnos desde administrador
+app.get('/alumnos-registrados', async (req, res) => {
+  try {
+    const alumnos = await Alumno.findAll(); 
+   return res.json({ message: 'Listo', data:alumnos });
 
+  } catch (error) {
+    console.error('Error al buscar alumnos:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
     
 
 

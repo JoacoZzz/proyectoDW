@@ -7,7 +7,7 @@ export default function InicioAlumno() {
 
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('usuario');
     router.push('/login');
   };
 

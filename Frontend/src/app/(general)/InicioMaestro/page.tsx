@@ -7,11 +7,16 @@ import { useRouter } from 'next/navigation';
 
 export default function InicioMaestro() {
 const {usuario, setUsuario} = useUsuario();
-console.log('Usuario en info', usuario)
+
 const router=useRouter();
 if (!usuario) {
   return <p> No hay usuario logueado</p>
 }
+const cerrarSesion = () => {
+    setUsuario(null);
+    router.push('/login');
+  };
+
   return (
     <div>
       <h2>Informacion de Maestro</h2>
@@ -36,8 +41,14 @@ if (!usuario) {
           
         </tbody>
       </table>
-      <button className='button-btn-secondary' onClick={(e)=>{setUsuario(null);router.push('/login');}}>Cerrar Sesion</button>
-    </div>
+<button 
+        className="button-btn-secondary" 
+        onClick={cerrarSesion}
+        type="button"
+      >
+        Cerrar Sesión
+      </button>
+          </div>
   );
 };
   
