@@ -5,7 +5,8 @@ const Maestro = require('./Modelos/Maestro');
 const Administrador = require('./Modelos/Administrador');
 const sequelize = require('./Conexion/db');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const Materias = require('./Modelos/Materias');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -129,10 +130,10 @@ app.post('/api/maestros', async (req, res) => {
    
     app.post('/api/alumnos', async (req, res) => {
   try {
-    const { nombreAlumno, contraseña, modulo} = req.body;
+    const { nombreAlumno, contraseña, grado} = req.body;
 
     // Validación básica
-    if (!nombreAlumno || !contraseña || !modulo) {
+    if (!nombreAlumno || !contraseña || !grado) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -144,7 +145,7 @@ app.post('/api/maestros', async (req, res) => {
     const newAlumno = await Alumno.create({
       nombreAlumno,
       contraseña: hashedPassword, 
-      modulo
+      grado
       
     });
 
@@ -156,7 +157,7 @@ app.post('/api/maestros', async (req, res) => {
       user: {
         id: newAlumno.id,
         nombreAlumno: newAlumno.nombreAlumno,
-        modulo: newAlumno.modulo
+        grado: newAlumno.grado
      
       
       }
@@ -209,6 +210,7 @@ app.post('/api/administrador', async (req, res) => {
 //Get alumnos desde administrador
 app.get('/alumnos-registrados', async (req, res) => {
   try {
+    
     const alumnos = await Alumno.findAll(); 
    return res.json({ message: 'Listo', data:alumnos });
 
@@ -218,7 +220,19 @@ app.get('/alumnos-registrados', async (req, res) => {
   }
 });
     
+//Get de materias
+app.get('/materias-matriculadas', async (req, res) => {
+  try {
+    const { grado} = req.body;
+    const materias = await Materias.findOne({ where: { grado } }); 
+   return res.json({ message: 'Listo', data:materias });
 
+  } catch (error) {
+    console.error('Error al buscar alumnos:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+    
 
 app.listen(5000, () =>{
     console.log('Aplicacion Iniciada en el puerto 5000')

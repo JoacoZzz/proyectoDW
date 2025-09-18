@@ -13,11 +13,6 @@ export default function Home() {
   return (
   <UserProvider> 
     <LoginPage></LoginPage>
-   <RegistroAlumno></RegistroAlumno>
-   <InicioAlumno></InicioAlumno>
-   <InicioAdmin></InicioAdmin>
-   <InicioMaestro></InicioMaestro>
-   <AlumnosRegistrados></AlumnosRegistrados>
   </UserProvider>
   );
 }
