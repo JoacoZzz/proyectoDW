@@ -34,7 +34,7 @@ export default function InicioAlumno() {
             Accede al sistema de matrícula y selecciona tus asignaturas.
           </p>
           <button
-            onClick={() => router.push('/matricula')} // aquí hay que poner la ruta de la pantalla de matricula
+            onClick={() => router.push('/Matricula')} // aquí hay que poner la ruta de la pantalla de matricula
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a matrícula
