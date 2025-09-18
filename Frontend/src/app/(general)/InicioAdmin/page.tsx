@@ -8,7 +8,7 @@ export default function InicioAdmin() {
   
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('usuario');
     router.push('/login');
   };
 
@@ -35,7 +35,7 @@ export default function InicioAdmin() {
             Consulta la lista completa de alumnos registrados en el sistema.
           </p>
           <button
-            onClick={() => router.push('/listaAlumnos')} //Traer desde la Api
+            onClick={() => router.push('/AlumnosRegistrados')} //Traer desde la Api
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a alumnos
