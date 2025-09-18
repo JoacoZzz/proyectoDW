@@ -10,6 +10,12 @@ interface Materia {
 export default function Matricula() {
   const router = useRouter()
 
+function mostrarmaterias(){
+
+
+}
+
+
   // Materias preasignadas para primer grado
   const materias: Materia[] = [
     { id: 1, nombre: 'Matemáticas', horario: '08:00 - 09:00' },

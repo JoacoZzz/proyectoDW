@@ -49,7 +49,7 @@ export default function InicioAdmin() {
             Consulta y administra los horarios de clases.
           </p>
           <button
-            onClick={() => router.push('/listaHorarios')} //traer desde la api
+            onClick={() => router.push('VerHorariosAdmin')} //traer desde la api
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a horarios
