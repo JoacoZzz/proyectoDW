@@ -3,7 +3,7 @@ const {Sequelize} =require('sequelize');
 const sequelize= new Sequelize(
     'escuela_proyecto',
     'root',
-    'PPatitodehule456$$',
+    'Patata10',
 
     {
         host:'localhost',

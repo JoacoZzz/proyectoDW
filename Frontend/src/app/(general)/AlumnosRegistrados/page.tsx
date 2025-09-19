@@ -14,8 +14,7 @@ export default function AlumnosRegistrados(): JSX.Element {
       const datosTransformados: Alumno[] = data.data.map((a: any) => ({
         id: a.id,
         nombreAlumno: a.nombreAlumno,
-        contraseña: a.contraseña,
-        modulo: typeof a.modulo === 'object' ? a.modulo.nombre : a.modulo || 'Sin módulo'
+        grado: a.grado
       }))
 
       setAlumno(datosTransformados)
@@ -73,8 +72,7 @@ export default function AlumnosRegistrados(): JSX.Element {
           <tr>
             <th style={thStyle}>ID</th>
             <th style={thStyle}>Nombre del Alumno</th>
-            <th style={thStyle}>Contraseña</th>
-            <th style={thStyle}>Módulo</th>
+            <th style={thStyle}>Grado</th>
           </tr>
         </thead>
         <tbody>
@@ -82,8 +80,7 @@ export default function AlumnosRegistrados(): JSX.Element {
             <tr key={registro.id}>
               <td style={tdStyle}>{registro.id}</td>
               <td style={tdStyle}>{registro.nombreAlumno}</td>
-              <td style={tdStyle}>{registro.contraseña}</td>
-              <td style={tdStyle}>{registro.modulo}</td>
+              <td style={tdStyle}>{registro.grado}</td>
             </tr>
           ))}
         </tbody>
