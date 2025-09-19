@@ -1,25 +1,26 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../Conexion/db');
 
-const Alumno = sequelize.define('alumno', {
-   
-    nombreAlumno: {
+const Materias = sequelize.define('materias', {
+    
+    nombre: {
         type: DataTypes.STRING
     },
-
-    contraseña: {
+    dia: {
+        type: DataTypes.STRING
+    },
+    hora: {
         type: DataTypes.STRING
     },
     grado: {
         type: DataTypes.STRING
     }
-   
     
 },
     {
-        tableName: 'alumno',
+        tableName: 'maaterias',
         timestamps: false
     }
 )
 
-module.exports=Alumno;
+module.exports=Materias;

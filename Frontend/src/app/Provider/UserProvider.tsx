@@ -7,6 +7,7 @@ import { UsuarioContext } from '../Context/UsuarioContext';
 export default function UserProvider({children}: Plantilla) {
 
     const [usuario, setUsuarioEstado]= useState<Usuario | null>(null);
+    const [grado]= useState<string>('');
     
     
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function UserProvider({children}: Plantilla) {
     }
 
   return (
-    <UsuarioContext.Provider value={{usuario,setUsuario}} >
+    <UsuarioContext.Provider value={{usuario,grado,setUsuario}} >
         {children}
     </UsuarioContext.Provider>
   );

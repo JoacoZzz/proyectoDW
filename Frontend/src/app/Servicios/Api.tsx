@@ -18,7 +18,7 @@ const response= await axios.post<{success:boolean;noUser:boolean; ad:boolean;dat
     }
   }
 
-  export async function registroAlumno(userData: { nombreAlumno: string, contraseña: string, modulo: string }) {
+  export async function registroAlumno(userData: { nombreAlumno: string, contraseña: string, grado: string }) {
     try{
 
      
@@ -40,6 +40,21 @@ const response= await axios.post(`${apiURL}/api/alumnos`, userData);
 
      
 const response= await axios.get(`${apiURL}/alumnos-registrados`);
+  
+        return response.data;
+   
+   
+     } catch(error){
+        console.log(error)
+    
+    }
+  }
+
+  export async function getMaterias() {
+    try{
+
+     
+const response= await axios.get(`${apiURL}/materias-matriculadas`);
   
         return response.data;
    

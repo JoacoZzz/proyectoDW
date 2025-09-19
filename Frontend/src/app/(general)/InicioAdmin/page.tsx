@@ -50,6 +50,7 @@ export default function InicioAdmin() {
           </p> {/*Aqui tengo que hacer la lista de la imagen que me mando joaquin cardiel*/}
           <button
             onClick={() => router.push('/RegistroHorarios')} //traer desde la api
+
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a horarios

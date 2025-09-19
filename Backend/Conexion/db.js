@@ -4,6 +4,7 @@ const sequelize= new Sequelize(
     'escuela_proyecto',
     'root',
     'PPatitodehule456$$',
+
     {
         host:'localhost',
         port:3306,
