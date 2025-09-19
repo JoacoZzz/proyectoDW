@@ -52,7 +52,7 @@ const botonStyle = {
   marginRight: 'auto'
 }
 
-export default function VerMaestros(): tsx.Element {
+export default function VerMaestros() {
   const router = useRouter()
 
   const irARegistro = () => {

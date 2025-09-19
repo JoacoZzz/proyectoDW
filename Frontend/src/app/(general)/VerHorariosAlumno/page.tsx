@@ -111,6 +111,9 @@ const HorarioOrganizado: React.FC = () => {
           <option value="4">4° grado</option>
           <option value="5">5° grado</option>
           <option value="6">6° grado</option>
+          <option value="7">6° grado</option>
+          <option value="8">6° grado</option>
+          <option value="9">6° grado</option>
         </select>
       </div>
 
