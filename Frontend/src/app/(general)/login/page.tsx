@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '@/app/Servicios/Api';
 import { useUsuario } from '@/app/Provider/UserProvider';
+import Image from 'next/image';
 
 const Page = () => {
    const {setUsuario} = useUsuario();
@@ -54,6 +55,19 @@ if(data?.success===true && data.noUser===false ){
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
+
+ {/* Logo*/}
+       <div className="flex flex-col items-center mb-6">
+  <Image
+    src="/logo.png"
+    alt="IOMA Logo"
+    width={100}
+    height={100}
+    className="rounded-full"
+  />
+  <p className="mt-2 text-lg font-semibold text-gray-700 text-center">Instituto Oficial Mixto Astra</p>
+</div>
+
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Iniciar Sesión</h2>
         
         <form onSubmit={escuelaLogin} className="space-y-4">
