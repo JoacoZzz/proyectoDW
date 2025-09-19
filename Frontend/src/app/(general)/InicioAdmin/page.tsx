@@ -47,9 +47,10 @@ export default function InicioAdmin() {
           <h2 className="text-lg font-semibold mb-2">Ver Horarios</h2>
           <p className="text-sm text-gray-600 mb-4">
             Consulta y administra los horarios de clases.
-          </p>
+          </p> {/*Aqui tengo que hacer la lista de la imagen que me mando joaquin cardiel*/}
           <button
-            onClick={() => router.push('VerHorariosAdmin')} //traer desde la api
+            onClick={() => router.push('/VerHorariosAdmin')} //traer desde la api
+
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a horarios
@@ -63,7 +64,7 @@ export default function InicioAdmin() {
             Revisa la lista de maestros registrados en el sistema.
           </p>
           <button
-            onClick={() => router.push('/listaMaestros')} //traer de la api
+            onClick={() => router.push('/VerMaestros')} //traer de la api
             className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm"
           >
             Ir a maestros
