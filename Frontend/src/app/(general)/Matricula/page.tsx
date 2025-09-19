@@ -1,78 +1,80 @@
 'use client'
-import React, { JSX } from 'react'
+import { useRouter } from 'next/navigation'
 
-const containerStyle = {
-  maxWidth: '700px',
-  margin: '50px auto',
-  padding: '30px',
-  backgroundColor: '#e8f5e9',
-  borderRadius: '12px',
-  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+interface Materia {
+  id: number
+  nombre: string
+  horario: string
 }
 
-const tituloStyle = {
-  textAlign: 'center' as const,
-  fontSize: '26px',
-  fontWeight: 'bold' as const,
-  color: '#2e7d32',
-  marginBottom: '20px'
+export default function Matricula() {
+  const router = useRouter()
+
+function mostrarmaterias(){
+
+
 }
 
-const textoStyle = {
-  textAlign: 'center' as const,
-  fontSize: '16px',
-  color: '#555',
-  marginBottom: '30px'
-}
 
-const listaStyle = {
-  listStyleType: 'none' as const,
-  padding: 0,
-  marginBottom: '30px'
-}
-
-const itemStyle = {
-  backgroundColor: '#ffffff',
-  border: '1px solid #c8e6c9',
-  borderRadius: '8px',
-  padding: '12px',
-  marginBottom: '10px',
-  fontSize: '16px',
-  color: '#424242'
-}
-
-export default function Matricula(): JSX.Element {
-  const asignaturas = [
-    'Español',
-    'Matemáticas',
-    'Ciencias Naturales',
-    'Ciencias Sociales',
-    'Cívica',
-    'Inglés',
-    'Dibujo',
-    'Música',
-    'Deporte',
-    'Cocina'
+  // Materias preasignadas para primer grado
+  const materias: Materia[] = [
+    { id: 1, nombre: 'Matemáticas', horario: '08:00 - 09:00' },
+    { id: 2, nombre: 'Lengua y Literatura', horario: '09:00 - 10:00' },
+    { id: 3, nombre: 'Ciencias Naturales', horario: '10:00 - 11:00' },
+    { id: 4, nombre: 'Historia', horario: '11:00 - 12:00' },
+    { id: 5, nombre: 'Educación Física', horario: '12:00 - 12:30' }, // recreo incluido
+    { id: 6, nombre: 'Arte', horario: '12:30 - 13:00' },
+    { id: 7, nombre: 'Música', horario: '13:00 - 13:30' },
+    { id: 8, nombre: 'Inglés', horario: '13:30 - 14:00' },
+    { id: 9, nombre: 'Computación', horario: '14:00 - 14:30' },
+    { id: 10, nombre: 'Valores', horario: '14:30 - 15:00' },
   ]
 
+  const confirmarMatricula = () => {
+    // Aquí hay que guardar en la api
+    alert('¡Matrícula completada automáticamente!')
+    router.push('/inicioAlumno')
+  }
+
   return (
-    <div style={containerStyle}>
-      <h2 style={tituloStyle}>📚 Sistema de Matrícula</h2>
-      <p style={textoStyle}>
-        Selecciona tus asignaturas para el período escolar.
-      </p>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
+      <header className="bg-blue-600 text-white p-4 flex justify-between items-center shadow">
+        <h1 className="text-xl font-bold">Matrícula</h1>
+        <button
+          onClick={() => router.push('/inicioAlumno')}
+          className="bg-gray-800 hover:bg-gray-900 px-3 py-1 rounded-lg text-sm"
+        >
+          Volver
+        </button>
+      </header>
 
-      <ul style={listaStyle}>
-        {asignaturas.map((materia, index) => (
-          <li key={index} style={itemStyle}>
-            {materia}
-          </li>
-        ))}
-      </ul>
+      {/* Main */}
+      <main className="flex-1 p-6">
+        <h2 className="text-lg font-semibold mb-4">Tus materias asignadas:</h2>
 
-      <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#777' }}>
-        * Esta vista es solo informativa. Puedes activar la selección real más adelante.
-      </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {materias.map(m => (
+            <div
+              key={m.id}
+              className="p-4 border rounded-xl shadow bg-white hover:shadow-lg transition"
+            >
+              <h3 className="font-bold text-md">{m.nombre}</h3>
+              <p className="text-sm text-gray-600">{m.horario}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Botón confirmar */}
+        <div className="mt-6">
+          <button
+            onClick={confirmarMatricula}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+          >
+            Confirmar Matrícula
+          </button>
+        </div>
+      </main>
     </div>
   )
 }
